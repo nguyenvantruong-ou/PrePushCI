@@ -55,3 +55,25 @@ export default tseslint.config({
 
 
 
+install eslint
+go to .git and create pre-commit file 
+
+#!/bin/sh
+echo "Running ESLint..."
+npm run lint
+npm run test
+npm run format
+
+if [ $? -ne 0 ]; then
+  echo "ESLint failed. Fix the errors before committing."
+  exit 1
+fi
+
+echo "ESLint passed. Proceeding with the commit."
+
+set package.json
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "jest",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
+  }
