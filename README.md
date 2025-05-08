@@ -53,9 +53,5 @@ export default tseslint.config({
 })
 ```
 
-yarn add husky lint-staged --dev
-npx husky install
-npx husky add .husky/pre-commit "yarn lint-staged"
-npx husky add .husky/pre-push "yarn build"
-npx husky add .husky/pre-push "yarn build && tsc --noEmit"
+
 
