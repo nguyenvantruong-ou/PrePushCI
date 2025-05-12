@@ -77,3 +77,51 @@ set package.json
     "test": "jest",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
   }
+
+## Pre-commit Hook Setup
+
+This project uses a **pre-commit hook** to ensure code quality before each commit.  
+It runs **ESLint**, **Jest tests**, and **Prettier formatting** automatically.
+
+### Installation Steps
+1. Install ESLint:
+    ```bash
+    npm install eslint --save-dev
+    ```
+
+2. Go to the `.git/hooks` directory and create a file named `pre-commit`:
+    ```bash
+    touch .git/hooks/pre-commit
+    ```
+
+3. Add the following script to `.git/hooks/pre-commit`:
+    ```sh
+    #!/bin/sh
+    echo "Running ESLint..."
+    npm run lint
+    npm run test
+    npm run format
+
+    if [ $? -ne 0 ]; then
+      echo "ESLint failed. Fix the errors before committing."
+      exit 1
+    fi
+
+    echo "ESLint passed. Proceeding with the commit."
+    ```
+
+4. Make the `pre-commit` file executable:
+    ```bash
+    chmod +x .git/hooks/pre-commit
+    ```
+
+---
+
+### Update `package.json` Scripts
+Add the following scripts to your `package.json`:
+```json
+"scripts": {
+  "lint": "eslint . --ext .ts,.tsx",
+  "test": "jest",
+  "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
+}
